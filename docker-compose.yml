@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   foyer-app:
-    image: bengagioussama/foyer-app:${TAG:-latest}
+    image: bengagioussama/foyer-app:1.0
     container_name: foyer-app-container
     ports:
       - "8086:8086"
