@@ -2,8 +2,8 @@ version: '3.8'
 
 services:
   foyer-app:
-    image: omarchouikh/foyer-app-repo:${TAG:-latest}
-    container_name: foyer-app
+    image: bengagioussama/foyer-app:${TAG:-latest}
+    container_name: foyer-app-container
     ports:
       - "8086:8086"
     environment:
@@ -29,6 +29,8 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE:-foyer}
     ports:
       - "3307:3306"
+      - "8080:8080"
+    restart: always
     volumes:
       - mysql-data:/var/lib/mysql
     healthcheck:

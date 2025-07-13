@@ -120,16 +120,21 @@
                     </execution>
                 </executions>
             </plugin>
+                 <plugin>
+            		<groupId>org.sonarsource.scanner.maven</groupId>
+            		<artifactId>sonar-maven-plugin</artifactId>
+            		<version>3.9.1.2184</version>
+        	 </plugin>
         </plugins>
     </build>
     <distributionManagement>
     <repository>
         <id>nexus-releases</id>  <!-- Must match settings.xml -->
-        <url>http://localhost:8081/repository/foyer-repo</url>
+        <url>http://localhost:8081/repository/maven-releases</url>
     </repository>
     <snapshotRepository>
         <id>nexus-snapshots</id>  <!-- For SNAPSHOT versions -->
-        <url>http://localhost:8081/repository/foyer-repo</url>
+        <url>http://localhost:8081/repository/maven-snapshots/</url>
     </snapshotRepository>
 </distributionManagement>
   

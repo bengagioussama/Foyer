@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EtudiantService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Foyer</a> &gt; <a href="index.source.html" class="el_package">tn.esprit.spring.Services.Etudiant</a> &gt; <span class="el_source">EtudiantService.java</span></div><h1>EtudiantService.java</h1><pre class="source lang-java linenums">package tn.esprit.spring.Services.Etudiant;
+
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+import tn.esprit.spring.DAO.Entities.Etudiant;
+import tn.esprit.spring.DAO.Entities.Reservation;
+import tn.esprit.spring.DAO.Repositories.EtudiantRepository;
+import tn.esprit.spring.DAO.Repositories.ReservationRepository;
+
+import java.util.List;
+
+@Service
+<span class="nc" id="L13">@AllArgsConstructor</span>
+public class EtudiantService implements IEtudiantService {
+    EtudiantRepository repo;
+    ReservationRepository reservationRepository;
+
+    @Override
+    public Etudiant addOrUpdate(Etudiant e) {
+<span class="nc" id="L20">        return repo.save(e);</span>
+    }
+
+    @Override
+    public List&lt;Etudiant&gt; findAll() {
+<span class="nc" id="L25">        return repo.findAll();</span>
+    }
+
+    @Override
+    public Etudiant findById(long id) {
+<span class="nc" id="L30">        return repo.findById(id).get();</span>
+    }
+
+    @Override
+    public void deleteById(long id) {
+<span class="nc" id="L35">        repo.deleteById(id);</span>
+<span class="nc" id="L36">    }</span>
+
+    @Override
+    public void delete(Etudiant e) {
+<span class="nc" id="L40">        repo.delete(e);</span>
+<span class="nc" id="L41">    }</span>
+
+    @Override
+    public List&lt;Etudiant&gt; selectJPQL(String nom) {
+<span class="nc" id="L45">        return repo.selectJPQL(nom);</span>
+    }
+
+    @Override
+    public void affecterReservationAEtudiant
+            (String idR, String nomE, String prenomE) {
+        // ManyToMany: Reservation(Child) -- Etudiant(Parent)
+        // 1- Récupérer les objets
+<span class="nc" id="L53">        Reservation res= reservationRepository.findById(idR).get();</span>
+<span class="nc" id="L54">        Etudiant et= repo.getByNomEtAndPrenomEt(nomE,prenomE);</span>
+        // 2- Affectation: On affecte le child au parent
+<span class="nc" id="L56">        et.getReservations().add(res);</span>
+        // 3- Save du parent
+<span class="nc" id="L58">        repo.save(et);</span>
+<span class="nc" id="L59">    }</span>
+    @Override
+    public void desaffecterReservationAEtudiant
+            (String idR, String nomE, String prenomE) {
+        // ManyToMany: Reservation(Child) -- Etudiant(Parent)
+        // 1- Récupérer les objets
+<span class="nc" id="L65">        Reservation res= reservationRepository.findById(idR).get();</span>
+<span class="nc" id="L66">        Etudiant et= repo.getByNomEtAndPrenomEt(nomE,prenomE);</span>
+        // 2- Affectation: On desaffecte le child au parent
+<span class="nc" id="L68">        et.getReservations().remove(res);</span>
+        // 3- Save du parent
+<span class="nc" id="L70">        repo.save(et);</span>
+<span class="nc" id="L71">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

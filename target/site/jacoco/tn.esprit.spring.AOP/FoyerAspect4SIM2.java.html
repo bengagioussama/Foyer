@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FoyerAspect4SIM2.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Foyer</a> &gt; <a href="index.source.html" class="el_package">tn.esprit.spring.AOP</a> &gt; <span class="el_source">FoyerAspect4SIM2.java</span></div><h1>FoyerAspect4SIM2.java</h1><pre class="source lang-java linenums">package tn.esprit.spring.AOP;
+
+import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
+import org.springframework.stereotype.Component;
+
+@Aspect // Pour considérer cette classe comme &quot;Aspect&quot;
+@Component // Pour considérer cette classe comme &quot;Bean Spring&quot;
+<span class="nc" id="L11">@Slf4j</span>
+<span class="nc" id="L12">public class FoyerAspect4SIM2 /* La classe: Aspect */  {</span>
+    // Les méthodes : Advices
+
+    @After(&quot;execution(* tn.esprit.spring.Services..*.*(..))&quot;)
+    public void afterAdvice(JoinPoint jp){
+<span class="nc" id="L17">        log.info(&quot;ranni 5rajt mil méthode &quot;+jp.getSignature().getName());</span>
+<span class="nc" id="L18">    }</span>
+
+    // @AfterReturning()
+    // @AfterThrowing()
+
+    @Before(&quot;execution(* tn.esprit.spring.Services..*.*(..))&quot;)
+    public void beforeAdvice(JoinPoint jp){
+<span class="nc" id="L25">        log.info(&quot;ranni d5alt lil méthode &quot;+jp.getSignature().getName());</span>
+<span class="nc" id="L26">    }</span>
+
+    @Before(&quot;execution(* tn.esprit.spring.Services..*.ajouter*(..))&quot;)
+    public void beforeAdvice2(JoinPoint jp){
+<span class="nc" id="L30">        log.info(&quot;Ranni méthode ajouter&quot;);</span>
+<span class="nc" id="L31">    }</span>
+
+    @Around(&quot;execution(* tn.esprit.spring.Services..*.*(..))&quot;)
+    public Object profile(ProceedingJoinPoint pjp) throws Throwable
+    {
+<span class="nc" id="L36">        long start = System.currentTimeMillis();</span>
+        //Object obj = pjp.proceed();
+<span class="nc" id="L38">        long elapsedTime = System.currentTimeMillis() - start;</span>
+<span class="nc" id="L39">        log.info(&quot;Method execution time: &quot; + elapsedTime + &quot; milliseconds.&quot;);</span>
+        //return obj;
+<span class="nc" id="L41">        return null;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
