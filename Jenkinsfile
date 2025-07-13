@@ -152,7 +152,7 @@ pipeline {
 
                     // For local testing, you might need to manually log in on the Jenkins agent or use environment variables
 
-                    sh "docker login -u ${DOCKER_HUB_USERNAME} -p your_docker_hub_password_here" // REPLACE WITH YOUR DOCKER HUB PASSWORD
+                    sh "docker login -u ${DOCKER_HUB_USERNAME} -p Oussama22" // REPLACE WITH YOUR DOCKER HUB PASSWORD
 
                     echo "Pushing Docker image..."
 
