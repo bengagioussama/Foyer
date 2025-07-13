@@ -110,7 +110,7 @@ pipeline {
 
                     // and the credentials are configured in Jenkins or ~/.m2/settings.xml on the agent.
 
-                    sh "mvn deploy -s /home/oussama/.m2/settings.xml"
+                    sh "mvn deploy -s /var/lib/jenkins/.m2/settings.xml"
 
                 }
 
