@@ -6,7 +6,7 @@ pipeline {
 
         // Maven settings file path
 
-        MAVEN_SETTINGS = "${HOME}/.m2/settings.xml"
+        MAVEN_SETTINGS = "/home/oussama/.m2/settings.xml"
 
         // Docker Hub username - REPLACE WITH YOUR DOCKER HUB USERNAME
 
@@ -110,7 +110,7 @@ pipeline {
 
                     // and the credentials are configured in Jenkins or ~/.m2/settings.xml on the agent.
 
-                    sh "mvn deploy -s ${MAVEN_SETTINGS}"
+                    sh "mvn deploy -s /home/oussama/.m2/settings.xml"
 
                 }
 
