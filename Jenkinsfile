@@ -21,7 +21,7 @@ pipeline {
 
         SONAR_LOGIN = "admin" 
 
-        SONAR_PASSWORD = "admin" // In a real scenario, use Jenkins credentials
+        SONAR_PASSWORD = "admin" 
 
     }
 
