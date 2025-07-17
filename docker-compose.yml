@@ -12,9 +12,13 @@ services:
       - SPRING_DATASOURCE_PASSWORD=
       - SERVER_PORT=8086
       - SERVER_SERVLET_CONTEXT_PATH=/Foyer
+      - OTEL_SERVICE_NAME="Foyer"
+      - OTEL_EXPORTER_OTLP_ENDPOINT="http://otel-collector:4317" # Point to the collector service
     depends_on:
       devops-db:
         condition: service_healthy
+      otel-collector:
+        condition: service_started # Ensure collector starts before app
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8086/Foyer/actuator/health"]
       interval: 30s
@@ -39,5 +43,41 @@ services:
       timeout: 10s
       retries: 5
 
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:latest
+    container_name: otel-collector
+    command: [--config=/etc/otel-collector-config.yaml]
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml # Mount your collector config file
+    ports:
+      - "4317:4317" # OTLP gRPC receiver
+      - "4318:4318" # OTLP HTTP receiver
+      - "8889:8889" # Prometheus metrics exporter
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command: --config.file=/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    depends_on:
+      - otel-collector
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - prometheus
+
 volumes:
   mysql-data:
+  grafana-storage:
