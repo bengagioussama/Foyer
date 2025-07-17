@@ -33,7 +33,7 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE:-foyer}
     ports:
       - "3308:3306"
-      - "8082:8082"
+      - "8083:8082"
     restart: always
     volumes:
       - mysql-data:/var/lib/mysql
